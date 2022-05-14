@@ -1,64 +1,136 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Installation
+1. Get project and install
 
-## About Laravel
+```
+git clone
+composer install
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+2. Configure .env file for DB (clean DB is best)
+3. Run migration and seeders
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+php artisan migrate:fresh --seed
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Usage
+All API request require JSON request header
+```http request
+Accept: application/json
+```
 
-## Learning Laravel
+API Tokens for Salesmen and Codelist are sent as Bearer token in request header
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```http request
+Authorization: Bearer 1|KgFkUI2urZDAd8GdxgeE9FAy6itmS8RTNY1ioeuU
+```
+### 1. Generate API Tokens
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Different permission tokens are available to generate. These tokens can be use for testing permissions. No Bearer token is required for generating a user.
 
-## Laravel Sponsors
+#### Token with ALL permissions
+This multi-purpose API token allows following actions:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- get Salesmen info
+- get single Salesman info
+- create a new Salesman
+- delete an existing Salesman
+- update an existing Salesman
+- get Codelist
 
-### Premium Partners
+Request
+```http request
+GET /api/generateUserAllAbilities
+```
+Sample Response
+```yaml
+{
+    "token": "22|KsAhZzLugMQAzuMih0Wsvib88uOzAejMSWunOyp5"
+}
+```
+#### Token with Salesmen ONLY permissions
+This API token allows following actions:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- get Salesmen info
+- get single Salesman info
+- create a new Salesman
+- delete an existing Salesman
+- update an existing Salesman
+  
+Request
+```http request
+GET /api/generateUserSalesmenOnly
+```
+Sample Response
+```yaml
+{
+    "token": "22|KsAhZzLugMQAzuMih0Wsvib88uOzAejMSWunOyp5"
+}
+```
 
-## Contributing
+#### Token with Codelist ONLY permissions
+This API token allows following actions:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- get Codelist
 
-## Code of Conduct
+Request
+```http request
+GET /api/generateUserCodelistOnly
+```
+Sample Response
+```yaml
+{
+    "token": "22|KsAhZzLugMQAzuMih0Wsvib88uOzAejMSWunOyp5"
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Token with Salesmen GET ONLY permissions
+This API token allows following actions:
 
-## Security Vulnerabilities
+- get Salesmen info
+- get single Salesman info
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Request
+```http request
+GET /api/generateUserSalesmenGetOnly
+```
+Sample Response
+```yaml
+{
+    "token": "22|KsAhZzLugMQAzuMih0Wsvib88uOzAejMSWunOyp5"
+}
+```
 
-## License
+### 2. Generate API requests
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Get single Salesman info
+```http request
+GET /api/salesmen/{salesman_uuid}
+```
+- salesman_uuid - required, Salesman UUID
+#### Get multiple Salesmen info
+```http request
+GET /api/salesmen/{page=?}{per_page=?}{sort=?}
+```
+- page - optional, int
+- per_page - optional, int
+- sort - optional, string, column name#### Get multiple Salesmen info
+#### Delete a Salesman
+```http request
+DELETE /api/salesmen/{salesman_uuid}
+```
+- salesman_uuid - required, Salesman UUID
+#### Update a Salesman
+```http request
+PUT /api/salesmen/{salesman_uuid}
+```
+- salesman_uuid - required, Salesman UUID
+#### Create a new Salesman
+```http request
+POST /api/salesmen
+```
+#### Get Codelist
+```http request
+GET /api/codelist
+```
