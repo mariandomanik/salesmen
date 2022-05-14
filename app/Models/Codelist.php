@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Codelist extends Model {
-    use HasFactory;
 
     /**
      * Generate codelist array
@@ -46,7 +44,7 @@ class Codelist extends Model {
             ];
         }
 
-        $basicCodeList = [
+        $fullCodeList = [
             'marital_statuses' => [
                 'code' => 'single',
                 'name' => [
@@ -68,9 +66,9 @@ class Codelist extends Model {
         ];
 
         //append titles to the codelist
-        $basicCodeList['titles_before'] = $appendTitlesBefore;
-        $basicCodeList['titles_after'] = $appendTitlesAfter;
+        $fullCodeList['titles_before'] = $appendTitlesBefore;
+        $fullCodeList['titles_after'] = $appendTitlesAfter;
 
-        return $basicCodeList;
+        return $fullCodeList;
     }
 }

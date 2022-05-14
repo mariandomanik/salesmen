@@ -36,22 +36,22 @@ class SalesmenController extends Controller {
 
         if (!empty($request->per_page)) {
             $perPage = (int)$request->per_page;
-            $includePerPage = true;
+            $includePerPageInLinks = true;
         } else {
             $perPage = 10;
-            $includePerPage = false;
+            $includePerPageInLinks = false;
         }
 
         if (!empty($request->sort)) {
             $sortColumn = $request->sort;
-            $includeSort = true;
+            $includeSortInLinks = true;
         } else {
             $sortColumn = 'created_at';
-            $includeSort = false;
+            $includeSortInLinks = false;
         }
 
         //fort desc sorting, column name includes - char
-        if (str_contains($sortColumn, '-')) {
+        if ($sortColumn[0] === '-') {
             $sortOrder = 'desc';
             $sortColumn = str_replace('-', '', $sortColumn);
         } else {
@@ -63,7 +63,7 @@ class SalesmenController extends Controller {
             throw new BadRequestException();
         }
 
-        $links = $this->generateLinks(Salesman::count(), $page, $perPage, $sortColumn, $includePerPage, $includeSort);
+        $links = $this->generateLinks(Salesman::count(), $page, $perPage, $sortColumn, $includePerPageInLinks, $includeSortInLinks);
 
         $salesmen = Salesman::skip(($page - 1) * $perPage)->take($perPage)->orderBy($sortColumn, $sortOrder)->get();
         return $this->generateSalesmanResponse($salesmen, $links);
@@ -156,12 +156,13 @@ class SalesmenController extends Controller {
      */
     public function delete(Salesman $salesman): Response {
         $salesman->delete();
-        return response('', 204);
+        return response(null, 204);
     }
 
     /**
      * Generate good response containing Salesmen data, code 200
      * @param Collection|Salesman $data
+     * @param array $links
      * @return JsonResponse
      */
     private function generateSalesmanResponse(Collection|Salesman $data, array $links = []): JsonResponse {
@@ -180,11 +181,11 @@ class SalesmenController extends Controller {
      * @param int $page Current page in request
      * @param int $perPage Number of items per page
      * @param string $sortColumn Column name to sort by
-     * @param bool $includePerPage Include per_page in URL
-     * @param bool $includeSort Include sort in URL
+     * @param bool $includePerPageInLinks
+     * @param bool $includeSortInLinks
      * @return string[]
      */
-    private function generateLinks(int $total, int $page, int $perPage, string $sortColumn, bool $includePerPage, bool $includeSort): array {
+    private function generateLinks(int $total, int $page, int $perPage, string $sortColumn, bool $includePerPageInLinks, bool $includeSortInLinks): array {
         $url = '/salesmen?page=';
 
         $lastPage = (int)ceil($total / $perPage);
@@ -199,10 +200,10 @@ class SalesmenController extends Controller {
         ];
 
         foreach ($links as $key => $link) {
-            if ($includePerPage) {
+            if ($includePerPageInLinks) {
                 $links[$key] .= '?per_page=' . $perPage;
             }
-            if ($includeSort) {
+            if ($includeSortInLinks) {
                 $links[$key] .= '?sort=' . $sortColumn;
             }
         }

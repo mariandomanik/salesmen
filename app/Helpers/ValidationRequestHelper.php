@@ -26,12 +26,10 @@ class ValidationRequestHelper {
                 $input[$failedAttribute] = $input[$failedAttribute][0];
             }
 
-            //this is used only for In case
-            $originalFailedAttribute = '';
-
             //when validating arrays, get input field and array key
+            //original only used for IN
+            $originalFailedAttribute = $failedAttribute;
             if (str_contains($failedAttribute, '.')) {
-                $originalFailedAttribute = $failedAttribute;
                 $failedAttribute = explode('.', $failedAttribute);
             }
 

@@ -32,6 +32,7 @@ class Salesman extends Model {
     public const RESPONSE_CODE_OUT_OF_RANGE = 'INPUT_DATA_OUT_OF_RANGE';
 
     //allowed titles before
+    //when adding new titles, check codelist lang file
     public const TITLES_BEFORE = [
         'Bc.',
         'Mgr.',
@@ -76,11 +77,13 @@ class Salesman extends Model {
         'LL.M'
     ];
 
+    //allowed genders
     public const GENDERS = [
         'm',
         'f'
     ];
 
+    //allowed marital statuses
     public const MARITAL_STATUSES = [
         'single',
         'married',
@@ -131,13 +134,13 @@ class Salesman extends Model {
             get: static function ($value, $attributes) {
                 $displayName = '';
 
-                if ($attributes['titles_before'] !== '') {
+                if (!empty($attributes['titles_before'])) {
                     $displayName .= "{$attributes['titles_before']} ";
                 }
 
                 $displayName .= "{$attributes['first_name']} {$attributes['last_name']}";
 
-                if ($attributes['titles_after'] !== '') {
+                if (!empty($attributes['titles_after'])) {
                     $displayName .= ", {$attributes['titles_after']}";
                 }
 
@@ -147,8 +150,8 @@ class Salesman extends Model {
     }
 
     /**
-     * Transform titles_before string into array
-     * @return Attribute
+     * Transform titles_before comma-separated string into array
+     * @return Attribute Eloquent attribute titles_before
      */
     protected function titlesBefore(): Attribute {
         return Attribute::make(
@@ -157,8 +160,8 @@ class Salesman extends Model {
     }
 
     /**
-     * Transform titles_after string into array
-     * @return Attribute
+     * Transform titles_after comma-separated string into array
+     * @return Attribute Eloquent attribute titles_after
      */
     protected function titlesAfter(): Attribute {
         return Attribute::make(

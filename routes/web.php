@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Salesman;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -16,18 +15,3 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-//    //return view('welcome');
-//    //token 1|KgFkUI2urZDAd8GdxgeE9FAy6itmS8RTNY1ioeuU
-//
-//    $user = User::create([
-//        'name' => 'randomName',
-//        'email' => 'random@email.com',
-//        'password' => Hash::make('password'),
-//    ]);
-//
-//    $token = $user->createToken('salesmen_token')->plainTextToken;
-//
-//    echo $token;
-
-});

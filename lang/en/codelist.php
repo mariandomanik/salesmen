@@ -5,6 +5,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Codelist names
+    | Add new titles in format title_after_lowerCase or title_before_lowerCase
     |--------------------------------------------------------------------------
     |
     */

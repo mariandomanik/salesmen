@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (AccessDeniedHttpException $e, $request) {
-            if ($request->is('api/salesmen/*')) {
+            if ($request->is('api/salesmen*')) {
                 return response()->json([
                     'errors' => [
                         'code' => Salesman::RESPONSE_CODE_FORBIDDEN,
@@ -62,7 +62,7 @@ class Handler extends ExceptionHandler
                 ], 403);
             }
 
-            if ($request->is('api/codelist/*')) {
+            if ($request->is('api/codelist*')) {
                 return response()->json([
                     'errors' => [
                         'code' => Salesman::RESPONSE_CODE_FORBIDDEN,
@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (QueryException $e, $request) {
-            if ($request->is('api/salesmen/*')) {
+            if ($request->is('api/salesmen*')) {
                 return response()->json([
                     'errors' => [
                         'code' => Salesman::RESPONSE_CODE_BAD_REQUEST,
@@ -84,7 +84,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
-            if ($request->is('api/salesmen/*')) {
+            if ($request->is('api/salesmen*')) {
                 return response()->json([
                     'errors' => [
                         'code' => Salesman::RESPONSE_CODE_NOT_FOUND,

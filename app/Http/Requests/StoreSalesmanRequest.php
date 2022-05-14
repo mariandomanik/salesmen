@@ -37,14 +37,14 @@ class StoreSalesmanRequest extends FormRequest {
         ];
     }
 
-//    /**
-//     * @param $validator
-//     * @return void
-//     */
-//    protected function failedValidation($validator) {
-//        //raw input, to pass posted value to error message
-//        $input = $this->all();
-//        \App\Helpers\ValidationRequestHelper::generateFailedValidationResponse($input, $validator->failed(), $this->expectsJson());
-//    }
+    /**
+     * @param $validator
+     * @return void
+     */
+    protected function failedValidation($validator) {
+        //raw input, to pass posted value to error message
+        $input = $this->all();
+        \App\Helpers\ValidationRequestHelper::generateFailedValidationResponse($input, $validator->failed(), $this->expectsJson());
+    }
 
 }
