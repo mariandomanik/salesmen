@@ -1,0 +1,10 @@
+first_name ;last_name ;titles_before ;titles_after ;prosight_id ;email ;phone ;gender ;marital_status 
+John;Rambo;;;11100;johnrambo@prosight.sk;421999125666;m;single
+Tester;Titulový;Ing.;PhD.;11101;tester@prosight.sk;421999125667;m;
+Tester;Tester;Bc.;;11002;tester1@prosight.sk;421999125668;m;married
+Janko;Hraško;;;11003;jankohrasko@prosight.sk;421999125669;m;
+Test;Testov;;;11004;tester2@prosight.sk;421999125670;m;
+Janka;Testová;;;11005;tester3@prosight.sk;421999125671;f;
+Jožko;Mrkvička;PharmDr.;;12103;tester4@prosight.sk;421999125672;m;divorced
+Julka;Testová;;;14755;tester5@prosight.sk;421999125673;f;
+Testerka;Testová;;;77755;tester6@prosight.sk;421999125674;f;
