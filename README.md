@@ -113,7 +113,7 @@ GET /api/salesmen/{salesman_uuid}
 #### Get multiple Salesmen info
 Requires token with salesmen-get
 ```http request
-GET /api/salesmen/{page=?}{per_page=?}{sort=?}
+GET /api/salesmen?{page=?}{per_page=?}{sort=?}
 ```
 - page - optional, int
 - per_page - optional, int
