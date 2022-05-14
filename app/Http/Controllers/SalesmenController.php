@@ -187,17 +187,19 @@ class SalesmenController extends Controller {
      */
     private function generateLinks(int $total, int $page, int $perPage, string $sortColumn, bool $includePerPageInLinks, bool $includeSortInLinks): array {
         $url = '/salesmen?page=';
+        $links = [];
 
         $lastPage = (int)ceil($total / $perPage);
-        $prevPage = ($page === 0 || $page === 1) ? 1 : $page - 1;
-        $nextPage = ($page === $lastPage) ? $lastPage : $page + 1;
 
-        $links = [
-            'first' => $url . 1,
-            'last'  => $url . $lastPage,
-            'prev'  => $url . $prevPage,
-            'next'  => $url . $nextPage
-        ];
+        if ($page !== $lastPage) {
+            $links['next'] = $url . ($page + 1);
+            $links['last'] = $url . $lastPage;
+        }
+
+        if ($page > 1) {
+            $links['first'] = $url . 1;
+            $links['prev'] = $url . ($page - 1);
+        }
 
         foreach ($links as $key => $link) {
             if ($includePerPageInLinks) {
