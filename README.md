@@ -115,7 +115,7 @@ GET /api/salesmen/{page=?}{per_page=?}{sort=?}
 ```
 - page - optional, int
 - per_page - optional, int
-- sort - optional, string, column name#### Get multiple Salesmen info
+- sort - optional, string, column name
 #### Delete a Salesman
 ```http request
 DELETE /api/salesmen/{salesman_uuid}
