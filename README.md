@@ -32,12 +32,12 @@ Different permission tokens are available to generate. These tokens can be use f
 #### Token with ALL permissions
 This multi-purpose API token allows following actions:
 
-- get Salesmen info
-- get single Salesman info
-- create a new Salesman
-- delete an existing Salesman
-- update an existing Salesman
-- get Codelist
+- get Salesmen info salesmen-get
+- get single Salesman info salesmen-get
+- create a new Salesman salesmen-store
+- delete an existing Salesman salesmen-delete
+- update an existing Salesman salesmen-update
+- get Codelist codelist-get
 
 Request
 ```http request
@@ -52,11 +52,11 @@ Sample Response
 #### Token with Salesmen ONLY permissions
 This API token allows following actions:
 
-- get Salesmen info
-- get single Salesman info
-- create a new Salesman
-- delete an existing Salesman
-- update an existing Salesman
+- get Salesmen info salesmen-get
+- get single Salesman info salesmen-get
+- create a new Salesman salesmen-store
+- delete an existing Salesman salesmen-delete
+- update an existing Salesman salesmen-update
   
 Request
 ```http request
@@ -72,7 +72,7 @@ Sample Response
 #### Token with Codelist ONLY permissions
 This API token allows following actions:
 
-- get Codelist
+- get Codelist codelist-get
 
 Request
 ```http request
@@ -88,8 +88,8 @@ Sample Response
 #### Token with Salesmen GET ONLY permissions
 This API token allows following actions:
 
-- get Salesmen info
-- get single Salesman info
+- get Salesmen info salesmen-get
+- get single Salesman info salesmen-get
 
 Request
 ```http request
@@ -105,11 +105,13 @@ Sample Response
 ### 2. Generate API requests
 
 #### Get single Salesman info
+Requires token with salesmen-get
 ```http request
 GET /api/salesmen/{salesman_uuid}
 ```
 - salesman_uuid - required, Salesman UUID
 #### Get multiple Salesmen info
+Requires token with salesmen-get
 ```http request
 GET /api/salesmen/{page=?}{per_page=?}{sort=?}
 ```
@@ -117,20 +119,24 @@ GET /api/salesmen/{page=?}{per_page=?}{sort=?}
 - per_page - optional, int
 - sort - optional, string, column name
 #### Delete a Salesman
+Requires token with salesmen-delete
 ```http request
 DELETE /api/salesmen/{salesman_uuid}
 ```
 - salesman_uuid - required, Salesman UUID
 #### Update a Salesman
+Requires token with salesmen-update
 ```http request
 PUT /api/salesmen/{salesman_uuid}
 ```
 - salesman_uuid - required, Salesman UUID
 #### Create a new Salesman
+Requires token with salesmen-store
 ```http request
 POST /api/salesmen
 ```
 #### Get Codelist
+Requires token with codelist-get
 ```http request
 GET /api/codelist
 ```
