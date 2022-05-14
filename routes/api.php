@@ -26,17 +26,21 @@ Route::middleware('auth:sanctum')->group(static function () {
         ->middleware(['auth:sanctum', 'ability:salesmen-store'])
         ->name('salesman.store');
 
-    Route::get('/salesmen/{salesman?}', [SalesmenController::class, 'show'])
+    Route::get('/salesmen/{salesman}', [SalesmenController::class, 'show'])
         ->middleware(['auth:sanctum', 'ability:salesmen-get'])
-        ->name('salesmen.get');
+        ->name('salesmen.show');
+
+    Route::get('/salesmen', [SalesmenController::class, 'index'])
+        ->middleware(['auth:sanctum', 'ability:salesmen-get'])
+        ->name('salesmen.index');
 
     Route::put('/salesmen/{salesman}', [SalesmenController::class, 'update'])
         ->middleware(['auth:sanctum', 'ability:salesmen-update'])
         ->name('salesmen.update');
 
-    Route::delete('/salesmen/{salesman}', [SalesmenController::class, 'delete'])
+    Route::delete('/salesmen/{salesman}', [SalesmenController::class, 'destroy'])
         ->middleware(['auth:sanctum', 'ability:salesmen-delete'])
-        ->name('salesmen.delete');
+        ->name('salesmen.destroy');
 
     Route::get('/codelist', [CodelistsController::class, 'show'])
         ->middleware(['auth:sanctum', 'ability:codelist-get'])

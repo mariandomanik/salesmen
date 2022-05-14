@@ -14,31 +14,28 @@ use Illuminate\Support\Facades\Schema;
 
 class SalesmenController extends Controller {
 
+    private const DEFAULT_PAGE = 1;
+    private const DEFAULT_PER_PAGE = 10;
+    private const DEFAULT_SORT_COLUMN = 'created_at';
+
     /**
-     * Show either one Salesman by UUID or list of salesmen by request GET params: page, per_page, sort
-     * @param Request $request HTTP Request
-     * @param Salesman|null $salesman
-     * @return JsonResponse JSON Response with salesman or salesmen
+     * List Salesmen
+     * @param Request $request
+     * @return JsonResponse
      * @throws BadRequestException
      */
-    public function show(Request $request, Salesman $salesman = null): JsonResponse {
-        //when getting 1 salesman by UUID
-        if ($salesman) {
-            return $this->generateSalesmanResponse($salesman);
-        }
-
-        //getting multiple salesmen
+    public function index(Request $request): JsonResponse {
         if (!empty($request->page)) {
             $page = (int)$request->page;
         } else {
-            $page = 1;
+            $page = self::DEFAULT_PAGE;
         }
 
         if (!empty($request->per_page)) {
             $perPage = (int)$request->per_page;
             $includePerPageInLinks = true;
         } else {
-            $perPage = 10;
+            $perPage = self::DEFAULT_PER_PAGE;
             $includePerPageInLinks = false;
         }
 
@@ -46,7 +43,7 @@ class SalesmenController extends Controller {
             $sortColumn = $request->sort;
             $includeSortInLinks = true;
         } else {
-            $sortColumn = 'created_at';
+            $sortColumn = self::DEFAULT_SORT_COLUMN;
             $includeSortInLinks = false;
         }
 
@@ -67,6 +64,15 @@ class SalesmenController extends Controller {
 
         $salesmen = Salesman::skip(($page - 1) * $perPage)->take($perPage)->orderBy($sortColumn, $sortOrder)->get();
         return $this->generateSalesmanResponse($salesmen, $links);
+    }
+
+    /**
+     * Show Salesman by UUID
+     * @param Salesman $salesman
+     * @return JsonResponse JSON Response with salesman or salesmen
+     */
+    public function show(Salesman $salesman): JsonResponse {
+        return $this->generateSalesmanResponse($salesman);
     }
 
     /**
@@ -154,7 +160,7 @@ class SalesmenController extends Controller {
      * @param Salesman $salesman
      * @return Response Empty response with HTTP code 204
      */
-    public function delete(Salesman $salesman): Response {
+    public function destroy(Salesman $salesman): Response {
         $salesman->delete();
         return response(null, 204);
     }
